@@ -1,11 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class FancyButton extends StatelessWidget {
   final String text;
-  FancyButton({required this.onPressed, this.text = ""});
+  const FancyButton({required this.onPressed, this.text = ""});
 
   final GestureTapCallback onPressed;
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -16,7 +16,7 @@ class FancyButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.date_range_rounded,
             color: Colors.black38,
           ),

@@ -29,6 +29,13 @@
             {
               "client_id": "266561304092-cdv63b8a1th10k6nh13623ifld7rh0ig.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "266561304092-kt7v6gmb8cojt9fus253hos99ibg03fm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dogDid"
+              }
             }
           ]
         }
