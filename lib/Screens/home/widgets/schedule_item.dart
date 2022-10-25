@@ -8,7 +8,7 @@ class ScheduleItem extends StatelessWidget {
     required this.activity,
   }) : super(key: key);
 
-  final String date;
+  final DateTime date;
   final String dog;
   final String activity;
 
@@ -20,7 +20,7 @@ class ScheduleItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            date,
+            '${date.hour}:${date.minute}',
             style: const TextStyle(fontSize: 58),
           ),
           DefaultTextStyle(
