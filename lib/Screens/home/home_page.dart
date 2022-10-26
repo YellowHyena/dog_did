@@ -17,7 +17,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map<String, dynamic>> _sheduleList = [];
+  // List<Map<String, dynamic>> _sheduleList = [];
+  List<Iterable<MapEntry<String, dynamic>>> _sheduleList = [];
 
   @override
   void didChangeDependencies() {
@@ -44,41 +45,20 @@ class _HomePageState extends State<HomePage> {
       //   // text: _testRef.toString(),
       // ),
 
-      body: SafeArea(
-          child: ListView.builder(
-        itemBuilder: (context, index) {
-          final item = _sheduleList[index];
-          var activity = 'Walk';
-          DateTime date;
-          inspect(item.entries);
-          for (var i in item.entries) {
-            // inspect(i.value);
-            if (i.value is Timestamp) {
-              date = (i.value as Timestamp).toDate();
-              // return Text('${i.key}${date.hour}:${date.minute}');
-              return ScheduleItem(date: date, dog: 'hunden', activity: i.key);
-            } else {
-              return Text(i.key);
-            }
-          }
-          return Text('nope');
-          // if (item.containsKey(activity)) {
-          //   date = (item[activity] as Timestamp).toDate();
-          //   return Text('$activity  ${date.hour}:${date.minute}');
-          // }
-          // return Text('data');
-        },
-        itemCount: _sheduleList.length,
-      )),
+      body: Schedule(dogList: _sheduleList),
     );
   }
 
   Future getSheduleList() async {
     var data = await FirebaseFirestore.instance.collection('users').doc('testUser').collection('allSchedule').get();
     var dogs = data.docs.map((e) => e.data()).toList();
+    var dog = dogs.map((e) => e.entries).toList();
+
+    // inspect(dog);
     // inspect(dogs);
     setState(() {
-      _sheduleList = dogs;
+      // _sheduleList = dog;
+      _sheduleList = dog;
     });
   }
 

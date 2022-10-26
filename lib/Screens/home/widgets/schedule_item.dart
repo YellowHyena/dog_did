@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleItem extends StatelessWidget {
@@ -8,6 +9,7 @@ class ScheduleItem extends StatelessWidget {
     required this.activity,
   }) : super(key: key);
 
+  // final Timestamp dateTimeStamp;
   final DateTime date;
   final String dog;
   final String activity;
