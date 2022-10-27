@@ -1,15 +1,30 @@
+import 'package:dog_did/screens/login_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'screens/home/home_page.dart';
 import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
+  // FirebaseAuth.instance.userChanges().listen((User? user) {
+  //   if (user == null) {
+  //     if (kDebugMode) {
+  //       print('User is currently signed out!');
+  //     }
+  //   } else {
+  //     if (kDebugMode) {
+  //       print('User is signed in!');
+  //     }
+  //   }
+  // });
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,11 +41,12 @@ class MyApp extends StatelessWidget {
         future: _firebaseApp,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            // ignore: avoid_print
-            print('ERROR här: ${snapshot.error.toString()}');
+            if (kDebugMode) {
+              print('ERROR här: ${snapshot.error.toString()}');
+            }
             return const Text("Someone let the dogs out and something went wrong!");
           } else if (snapshot.hasData) {
-            return const HomePage(title: 'DogDid Home Page');
+            return Scaffold(body: StreamBuilder<User?>(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot) => snapshot.hasData ? HomePage(title: 'home page') : const LoginWidget()));
           } else {
             return const Center(
               child: CircularProgressIndicator(),

@@ -21,20 +21,11 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -60,5 +51,36 @@ class DefaultFirebaseOptions {
     authDomain: 'dog-did.firebaseapp.com',
     databaseURL: 'https://dog-did-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'dog-did.appspot.com',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyA2-Vf0mdurXOgSXLx4duv0q2Sqcoz9Xz4',
+    appId: '1:266561304092:android:b1c794676888bdef60d1d9',
+    messagingSenderId: '266561304092',
+    projectId: 'dog-did',
+    databaseURL: 'https://dog-did-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'dog-did.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBcuNAmuq6tZhUrv9eGdxRB0hcEvipmRSY',
+    appId: '1:266561304092:ios:6e6c33456f9dfb6160d1d9',
+    messagingSenderId: '266561304092',
+    projectId: 'dog-did',
+    databaseURL: 'https://dog-did-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'dog-did.appspot.com',
+    iosClientId: '266561304092-kt7v6gmb8cojt9fus253hos99ibg03fm.apps.googleusercontent.com',
+    iosBundleId: 'com.example.dogDid',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBcuNAmuq6tZhUrv9eGdxRB0hcEvipmRSY',
+    appId: '1:266561304092:ios:6e6c33456f9dfb6160d1d9',
+    messagingSenderId: '266561304092',
+    projectId: 'dog-did',
+    databaseURL: 'https://dog-did-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'dog-did.appspot.com',
+    iosClientId: '266561304092-kt7v6gmb8cojt9fus253hos99ibg03fm.apps.googleusercontent.com',
+    iosBundleId: 'com.example.dogDid',
   );
 }

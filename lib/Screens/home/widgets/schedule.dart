@@ -12,7 +12,7 @@ class Schedule extends StatefulWidget {
     required this.dogList,
   }) : super(key: key);
 
-  final List<Iterable<MapEntry<String, dynamic>>> dogList;
+  final List dogList;
   @override
   State<Schedule> createState() => _ScheduleState();
 }
@@ -20,9 +20,12 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> {
   @override
   Widget build(BuildContext context) {
-    final dogname = 'unknown';
+    // getSortedList();
     for (var dog in widget.dogList) {
-      inspect(dog);
+      for (var dogProfile in dog.where((e) => e.key == 'dog')) {
+        inspect(dogProfile.value);
+        // dogProfile
+      }
     }
     return ListView(
       padding: const EdgeInsets.only(left: 50.0, top: 40.0),
@@ -34,5 +37,31 @@ class _ScheduleState extends State<Schedule> {
         ]
       ],
     );
+  }
+
+  void getSortedList() {
+    for (var docs in widget.dogList) {
+      // for (var entry in docs) {
+
+      // }
+      // for (var entry in dog.where((e) => e.value is Timestamp)) {
+      //   ScheduleItem(date: (entry.value as Timestamp).toDate(), dog: 'dogge', activity: entry.key);
+      // }
+    }
+
+    // var unsortedList = widget.dogList;
+    // List<Iterable<MapEntry<String, dynamic>>> sortedList = [];
+
+    // for (var dog in unsortedList) {
+    //   for (var entry in dog.where((entry) => entry.value is Timestamp)) {
+    //     // sortedList.add((entry.value as Timestamp).toDate());
+
+    //     sortedList.add((entry));
+    //   }
+    // }
+    // inspect(sortedList);
+
+    // sortedList.sort((a, b) => a.compareTo(b));
+    // inspect(sortedList);
   }
 }

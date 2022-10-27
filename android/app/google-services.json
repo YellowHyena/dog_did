@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "266561304092",
+    "firebase_url": "https://dog-did-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "dog-did",
     "storage_bucket": "dog-did.appspot.com"
   },
