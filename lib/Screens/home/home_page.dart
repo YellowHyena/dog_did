@@ -6,8 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dog_did/screens/home/widgets/schedule.dart';
 
-import '../login_widget.dart';
-
 class HomePage extends StatefulWidget {
   HomePage({super.key, required this.title});
 
@@ -21,7 +19,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // List<Map<String, dynamic>> _sheduleList = [];
   List _sheduleList = [];
-  var controller;
 
   @override
   void didChangeDependencies() {
@@ -32,7 +29,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Home page')),
+        appBar: AppBar(title: const Text('Home page'), actions: [
+          IconButton(
+            icon: const Icon(Icons.logout_outlined),
+            onPressed: () => FirebaseAuth.instance.signOut(),
+          ),
+        ]),
         body: Schedule(dogList: _sheduleList),
       );
 
