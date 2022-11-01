@@ -1,3 +1,4 @@
+import 'package:dog_did/screens/login/login_button.dart';
 import 'package:dog_did/screens/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
 import 'package:dog_did/main.dart';
@@ -47,39 +48,34 @@ class _LoginFormState extends State<LoginForm> {
   void validateAndSignIn() => formKey.currentState!.validate() ? signIn() : null;
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-
-    return LoginFormContainer(
-      formKey: formKey,
-      children: [
-        LoginWidgetTextField(
-          controller: emailController,
-          labelText: 'email',
-          validator: (email) => email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
-          buttoncheck: checkButtonValidation,
-        ),
-        const SizedBox(height: 4),
-        LoginWidgetTextField(
-          controller: passwordController,
-          labelText: 'password',
-          obscureText: true,
-          validator: (password) => password!.length < 6 ? 'Password must be at least 6 characters' : null,
-          buttoncheck: checkButtonValidation,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50), backgroundColor: _btnIsEnabled ? theme.primary : theme.inversePrimary, disabledBackgroundColor: theme.inversePrimary),
-          icon: _btnIsEnabled ? const Icon(Icons.lock_open_rounded, size: 32) : const Icon(Icons.lock_rounded, size: 32),
-          label: const Text(
-            'Sign in',
-            style: TextStyle(fontSize: 24),
+  Widget build(BuildContext context) => LoginFormContainer(
+        formKey: formKey,
+        children: [
+          LoginWidgetTextField(
+            controller: emailController,
+            labelText: 'email',
+            validator: (email) => email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
+            buttoncheck: checkButtonValidation,
           ),
-          onPressed: _btnIsEnabled ? validateAndSignIn : null,
-        )
-      ],
-    );
-  }
+          const SizedBox(height: 4),
+          LoginWidgetTextField(
+            controller: passwordController,
+            labelText: 'password',
+            obscureText: true,
+            validator: (password) => password!.length < 6 ? 'Password must be at least 6 characters' : null,
+            buttoncheck: checkButtonValidation,
+          ),
+          const SizedBox(height: 20),
+          LoginButton(onPressed: validateAndSignIn, text: 'Sign In', enabled: _btnIsEnabled),
+          // ElevatedButton.icon(
+          //   style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50), backgroundColor: _btnIsEnabled ? theme.primary : theme.inversePrimary, disabledBackgroundColor: theme.inversePrimary),
+          //   icon: _btnIsEnabled ? const Icon(Icons.lock_open_rounded, size: 32) : const Icon(Icons.lock_rounded, size: 32),
+          //   label: const Text(
+          //     'Sign in',
+          //     style: TextStyle(fontSize: 24),
+          //   ),
+          //   onPressed: _btnIsEnabled ? validateAndSignIn : null,
+          // )
+        ],
+      );
 }

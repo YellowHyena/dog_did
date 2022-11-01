@@ -1,3 +1,4 @@
+import 'package:dog_did/screens/login/login_button.dart';
 import 'package:dog_did/screens/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
 import 'package:email_validator/email_validator.dart';
@@ -61,45 +62,33 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-
-    return LoginFormContainer(
-      formKey: formKey,
-      children: [
-        LoginWidgetTextField(
-          controller: emailController,
-          labelText: 'email',
-          validator: (email) => email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
-          buttoncheck: checkButtonValidation,
-        ),
-        const SizedBox(height: 4),
-        LoginWidgetTextField(
-          controller: passwordController,
-          labelText: 'password',
-          obscureText: true,
-          validator: (password) => password!.length < 6 ? 'Password must be at least 6 characters' : null,
-          buttoncheck: checkButtonValidation,
-        ),
-        const SizedBox(height: 4),
-        LoginWidgetTextField(
-          controller: rePasswordController,
-          labelText: 'confirm password',
-          obscureText: true,
-          validator: (password) => password != passwordController.text ? 'Password must match' : null,
-          buttoncheck: checkButtonValidation,
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50), backgroundColor: _btnIsEnabled ? theme.primary : theme.inversePrimary, disabledBackgroundColor: theme.inversePrimary),
-          icon: _btnIsEnabled ? const Icon(Icons.lock_open_rounded, size: 32) : const Icon(Icons.lock_rounded, size: 32),
-          label: const Text(
-            'Sign up and log in',
-            style: TextStyle(fontSize: 24),
+  Widget build(BuildContext context) => LoginFormContainer(
+        formKey: formKey,
+        children: [
+          LoginWidgetTextField(
+            controller: emailController,
+            labelText: 'email',
+            validator: (email) => email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
+            buttoncheck: checkButtonValidation,
           ),
-          onPressed: _btnIsEnabled ? validateAndSignUp : null,
-        )
-      ],
-    );
-  }
+          const SizedBox(height: 4),
+          LoginWidgetTextField(
+            controller: passwordController,
+            labelText: 'password',
+            obscureText: true,
+            validator: (password) => password!.length < 6 ? 'Password must be at least 6 characters' : null,
+            buttoncheck: checkButtonValidation,
+          ),
+          const SizedBox(height: 4),
+          LoginWidgetTextField(
+            controller: rePasswordController,
+            labelText: 'confirm password',
+            obscureText: true,
+            validator: (password) => password != passwordController.text ? 'Password must match' : null,
+            buttoncheck: checkButtonValidation,
+          ),
+          const SizedBox(height: 20),
+          LoginButton(onPressed: validateAndSignUp, text: 'Sign up and log in', enabled: _btnIsEnabled),
+        ],
+      );
 }
