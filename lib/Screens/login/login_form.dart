@@ -13,34 +13,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  Future signIn() async {
-    Utils.loading(context);
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      if (e.message != null) Utils.showSnackBar(e.message.toString());
-    }
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
-  }
-
-  bool _btnIsEnabled = false;
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
-  // dialogPopUp() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: const Text('Error änna'),
-  //         content: const Text('That user does not exist. Please check each field for errors'),
-  //         actions: <Widget>[FloatingActionButton(onPressed: () => Navigator.of(context).pop())],
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   void dispose() {
     emailController.dispose();
@@ -51,23 +23,35 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void initState() {
     super.initState();
-    emailController.addListener(() {
-      checkButtonValidation;
-    });
-    passwordController.addListener(() {
-      checkButtonValidation;
-    });
+    emailController.addListener(() => checkButtonValidation);
+    passwordController.addListener(() => checkButtonValidation);
   }
 
-  void checkButtonValidation(String? string) => _formKey.currentState!.validate() ? setState(() => _btnIsEnabled = true) : setState(() => _btnIsEnabled = false);
+  bool _btnIsEnabled = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
-  void validateAndSignIn() => _formKey.currentState!.validate() ? signIn() : null;
+  Future signIn() async {
+    Utils.loading(context);
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      if (e.message != null) Utils.showSnackBar(e.message.toString());
+    }
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
+  void checkButtonValidation(String? string) => formKey.currentState!.validate() ? setState(() => _btnIsEnabled = true) : setState(() => _btnIsEnabled = false);
+
+  void validateAndSignIn() => formKey.currentState!.validate() ? signIn() : null;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
 
     return LoginFormContainer(
+      formKey: formKey,
       children: [
         LoginWidgetTextField(
           controller: emailController,

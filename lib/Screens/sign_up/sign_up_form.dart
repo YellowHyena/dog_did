@@ -16,28 +16,6 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final rePasswordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  var _btnIsEnabled = false;
-
-  void checkButtonValidation(String? string) => _formKey.currentState!.validate() ? setState(() => _btnIsEnabled = true) : setState(() => _btnIsEnabled = false);
-
-  void validateAndSignUp() => _formKey.currentState!.validate() ? signUp() : null;
-  Future signUp() async {
-    Utils.loading(context);
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-      if (e.message != null) Utils.showSnackBar(e.message.toString());
-    }
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
-  }
-
   @override
   void dispose() {
     emailController.dispose();
@@ -60,11 +38,34 @@ class _SignUpFormState extends State<SignUpForm> {
     });
   }
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final rePasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  var _btnIsEnabled = false;
+
+  void checkButtonValidation(String? string) => formKey.currentState!.validate() ? setState(() => _btnIsEnabled = true) : setState(() => _btnIsEnabled = false);
+
+  void validateAndSignUp() => formKey.currentState!.validate() ? signUp() : null;
+  Future signUp() async {
+    Utils.loading(context);
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      if (e.message != null) Utils.showSnackBar(e.message.toString());
+    }
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
 
     return LoginFormContainer(
+      formKey: formKey,
       children: [
         LoginWidgetTextField(
           controller: emailController,
