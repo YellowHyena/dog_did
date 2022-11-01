@@ -1,10 +1,12 @@
-import 'package:dog_did/screens/login/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'screens/auth_page.dart';
 import 'screens/home/home_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'utils.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,32 +29,43 @@ Future<void> main() async {
   );
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
   MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Dog Did',
-      theme: ThemeData(),
-      home: FutureBuilder(
-        future: _firebaseApp,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            if (kDebugMode) {
-              print('ERROR här: ${snapshot.error.toString()}');
+  Widget build(BuildContext context) => MaterialApp(
+        scaffoldMessengerKey: Utils.messengerKey,
+        navigatorKey: navigatorKey,
+        title: 'Dog Did',
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 255, 111, 54),
+          primary: const Color.fromARGB(255, 255, 111, 54),
+          primaryContainer: const Color.fromARGB(255, 54, 54, 54),
+          inversePrimary: const Color.fromARGB(255, 129, 92, 78),
+        )),
+        home: FutureBuilder(
+          future: _firebaseApp,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              if (kDebugMode) {
+                print('ERROR här: ${snapshot.error.toString()}');
+              }
+              return const Text("Someone let the dogs out and something went wrong!");
+            } else if (snapshot.hasData) {
+              return Scaffold(
+                body: StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (context, snapshot) => snapshot.hasData ? HomePage(title: 'home page') : const AuthPage(),
+                ),
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
             }
-            return const Text("Someone let the dogs out and something went wrong!");
-          } else if (snapshot.hasData) {
-            return Scaffold(body: StreamBuilder<User?>(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot) => snapshot.hasData ? HomePage(title: 'home page') : const LoginPage()));
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
-  }
+          },
+        ),
+      );
 }
