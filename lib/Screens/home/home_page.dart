@@ -4,11 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:dog_did/screens/home/widgets/schedule.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key, required this.title});
-
   final String title;
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -35,7 +33,26 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => FirebaseAuth.instance.signOut(),
           ),
         ]),
-        body: Schedule(dogList: _sheduleList),
+        // body: Schedule(dogList: _sheduleList),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'signed in as',
+                style: TextStyle(fontSize: 10),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                widget.user.email!,
+                style: const TextStyle(fontSize: 20),
+              )
+            ],
+          ),
+        ),
       );
 
   Future getSheduleList() async {
