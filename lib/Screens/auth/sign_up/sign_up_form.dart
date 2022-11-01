@@ -1,12 +1,12 @@
-import 'package:dog_did/screens/login/login_button.dart';
-import 'package:dog_did/screens/login/login_form_container.dart';
+import 'package:dog_did/screens/auth/login/login_button.dart';
+import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
+import '../../../main.dart';
 import '../login/login_textfield.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -88,7 +88,13 @@ class _SignUpFormState extends State<SignUpForm> {
             buttoncheck: checkButtonValidation,
           ),
           const SizedBox(height: 20),
-          LoginButton(onPressed: validateAndSignUp, text: 'Sign up and log in', enabled: _btnIsEnabled),
+          LoginButton(
+            onPressed: validateAndSignUp,
+            text: 'Sign Up',
+            enabled: _btnIsEnabled,
+            disabledIcon: Icons.lock_rounded,
+            enabledIcon: Icons.lock_open_rounded,
+          ),
         ],
       );
 }

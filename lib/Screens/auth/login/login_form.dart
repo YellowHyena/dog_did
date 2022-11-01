@@ -1,5 +1,5 @@
-import 'package:dog_did/screens/login/login_button.dart';
-import 'package:dog_did/screens/login/login_form_container.dart';
+import 'package:dog_did/screens/auth/login/login_button.dart';
+import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
 import 'package:dog_did/main.dart';
 import 'package:email_validator/email_validator.dart';
@@ -66,7 +66,13 @@ class _LoginFormState extends State<LoginForm> {
             buttoncheck: checkButtonValidation,
           ),
           const SizedBox(height: 20),
-          LoginButton(onPressed: validateAndSignIn, text: 'Sign In', enabled: _btnIsEnabled),
+          LoginButton(
+            onPressed: validateAndSignIn,
+            text: 'Sign In',
+            enabled: _btnIsEnabled,
+            disabledIcon: Icons.lock_rounded,
+            enabledIcon: Icons.lock_open_rounded,
+          ),
         ],
       );
 }

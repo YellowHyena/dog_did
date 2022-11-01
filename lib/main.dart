@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'screens/auth_page.dart';
+import 'screens/auth/auth_page.dart';
 import 'screens/home/home_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               if (kDebugMode) {
-                print('ERROR här: ${snapshot.error.toString()}');
+                print(snapshot.error.toString());
               }
               return const Text("Someone let the dogs out and something went wrong!");
             } else if (snapshot.hasData) {

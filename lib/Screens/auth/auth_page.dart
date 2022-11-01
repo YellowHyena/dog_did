@@ -1,4 +1,4 @@
-import 'package:dog_did/screens/login/login_page.dart';
+import 'package:dog_did/screens/auth/login/login_page.dart';
 import 'package:flutter/material.dart';
 
 import 'sign_up/sign_up_page.dart';

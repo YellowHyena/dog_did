@@ -1,5 +1,5 @@
-import 'package:dog_did/screens/login/login_button.dart';
-import 'package:dog_did/screens/login/login_form_container.dart';
+import 'package:dog_did/screens/auth/login/login_button.dart';
+import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,7 +54,13 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           buttoncheck: checkButtonValidation,
         ),
         const SizedBox(height: 20),
-        LoginButton(onPressed: resetPassword, text: 'Reset Password', enabled: _btnIsEnabled),
+        LoginButton(
+          onPressed: resetPassword,
+          text: 'Reset Password',
+          enabled: _btnIsEnabled,
+          disabledIcon: Icons.mail,
+          enabledIcon: Icons.outbond_rounded,
+        ),
         Positioned(
           top: 0.0,
           left: 0.0,

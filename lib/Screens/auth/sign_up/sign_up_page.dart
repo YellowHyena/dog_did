@@ -1,4 +1,4 @@
-import 'package:dog_did/screens/login/login_background.dart';
+import 'package:dog_did/screens/auth/login/login_background.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../login/login_container_template.dart';
