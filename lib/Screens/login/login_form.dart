@@ -67,15 +67,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 20),
           LoginButton(onPressed: validateAndSignIn, text: 'Sign In', enabled: _btnIsEnabled),
-          // ElevatedButton.icon(
-          //   style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50), backgroundColor: _btnIsEnabled ? theme.primary : theme.inversePrimary, disabledBackgroundColor: theme.inversePrimary),
-          //   icon: _btnIsEnabled ? const Icon(Icons.lock_open_rounded, size: 32) : const Icon(Icons.lock_rounded, size: 32),
-          //   label: const Text(
-          //     'Sign in',
-          //     style: TextStyle(fontSize: 24),
-          //   ),
-          //   onPressed: _btnIsEnabled ? validateAndSignIn : null,
-          // )
         ],
       );
 }
