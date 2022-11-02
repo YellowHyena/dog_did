@@ -7,6 +7,7 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'utils.dart';
+//comment for github test
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,6 @@ Future<void> main() async {
       }
     }
   });
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
