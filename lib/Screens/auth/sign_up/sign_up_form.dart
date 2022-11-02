@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
@@ -5,8 +6,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import '../../../main.dart';
+import '../../../user_data.dart';
 import '../login/login_textfield.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -48,6 +49,7 @@ class _SignUpFormState extends State<SignUpForm> {
   void checkButtonValidation(String? string) => formKey.currentState!.validate() ? setState(() => _btnIsEnabled = true) : setState(() => _btnIsEnabled = false);
 
   void validateAndSignUp() => formKey.currentState!.validate() ? signUp() : null;
+
   Future signUp() async {
     Utils.loading(context);
     try {
@@ -58,6 +60,8 @@ class _SignUpFormState extends State<SignUpForm> {
       }
       if (e.message != null) Utils.showSnackBar(e.message.toString());
     }
+
+    await createUserInDatabase(FirebaseAuth.instance.currentUser);
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
@@ -97,4 +101,20 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
         ],
       );
+
+  Future<void> createUserInDatabase(User? currentUser) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(currentUser?.uid);
+    if (currentUser != null) {
+      if (kDebugMode) {
+        print('current user is not null with id: ${currentUser.uid}');
+      }
+      final userToCreate = UserData(
+        id: currentUser.uid,
+        email: currentUser.email.toString(),
+        name: currentUser.email.toString(),
+      );
+      final json = userToCreate.toJson();
+      await docUser.set(json);
+    }
+  }
 }
