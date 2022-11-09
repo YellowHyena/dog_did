@@ -51,7 +51,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           controller: emailController,
           labelText: 'email',
           validator: (email) => email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
-          buttoncheck: checkButtonValidation,
+          onChanged: checkButtonValidation,
         ),
         const SizedBox(height: 20),
         LoginButton(

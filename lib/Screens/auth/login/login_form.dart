@@ -55,7 +55,7 @@ class _LoginFormState extends State<LoginForm> {
             controller: emailController,
             labelText: 'email',
             validator: (email) => email != null && !EmailValidator.validate(email) ? 'Enter a valid email' : null,
-            buttoncheck: checkButtonValidation,
+            onChanged: checkButtonValidation,
           ),
           const SizedBox(height: 4),
           LoginWidgetTextField(
@@ -63,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
             labelText: 'password',
             obscureText: true,
             validator: (password) => password!.length < 6 ? 'Password must be at least 6 characters' : null,
-            buttoncheck: checkButtonValidation,
+            onChanged: checkButtonValidation,
           ),
           const SizedBox(height: 20),
           LoginButton(

@@ -7,10 +7,10 @@ class LoginWidgetTextField extends StatefulWidget {
     required this.labelText,
     this.obscureText = false,
     required this.validator,
-    required this.buttoncheck,
+    required this.onChanged,
   }) : super(key: key);
 
-  final void Function(String?) buttoncheck;
+  final void Function(String?) onChanged;
   final String? Function(String?) validator;
   final TextEditingController controller;
   final String labelText;
@@ -42,7 +42,7 @@ class _LoginWidgetTextFieldState extends State<LoginWidgetTextField> {
         filled: true,
         fillColor: theme.primaryContainer,
       ),
-      onChanged: widget.buttoncheck,
+      onChanged: widget.onChanged,
       style: const TextStyle(color: Colors.white),
       obscureText: widget.obscureText,
     );
