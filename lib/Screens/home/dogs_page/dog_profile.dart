@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import 'dog_profile_form.dart';
+
 class DogProfile extends StatefulWidget {
   const DogProfile({super.key, required this.dog});
   final DogData dog;
@@ -18,7 +20,6 @@ class _DogProfileState extends State<DogProfile> {
   @override
   Widget build(BuildContext context) {
     final dog = widget.dog;
-    const textColor = Color.fromARGB(255, 141, 141, 141);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -47,41 +48,21 @@ class _DogProfileState extends State<DogProfile> {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        const Text('Breed: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor)),
-                        SizedBox(
-                          width: 250,
-                          child: TextFormField(
-                            initialValue: dog.breed,
-                            style: const TextStyle(fontSize: 20),
-                            decoration: const InputDecoration(border: InputBorder.none),
-                          ),
-                        ),
-                      ],
+                    DogProfileEntry(
+                      text: 'Breed',
+                      initialValue: dog.breed,
                     ),
-                    Row(
-                      children: [
-                        const Text('Age: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor)),
-                        SizedBox(
-                          width: 30,
-                          child: TextFormField(
-                            initialValue: dog.age.toString(),
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                            style: const TextStyle(fontSize: 20),
-                            keyboardType: TextInputType.number,
-                            maxLength: 2,
-                            decoration: const InputDecoration(counterText: '', border: InputBorder.none),
-                          ),
-                        ),
-                      ],
+                    DogProfileEntry(
+                      text: 'Age',
+                      initialValue: dog.age.toString(),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      keyboardType: TextInputType.number,
+                      maxLength: 2,
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: const [
-                        Text('Description', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor)),
-                      ],
-                    ),
+                    Row(children: [
+                      Text('Description', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.tertiary)),
+                    ]),
                     const SizedBox(height: 5),
                     Row(
                       children: [
@@ -94,6 +75,7 @@ class _DogProfileState extends State<DogProfile> {
                                 child: TextFormField(
                                   initialValue: dog.description,
                                   maxLines: 8,
+                                  decoration: const InputDecoration(border: InputBorder.none),
                                 ),
                               ),
                             ),
