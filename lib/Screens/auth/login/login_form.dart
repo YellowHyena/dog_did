@@ -38,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
-      if (e.message != null) Utils.showSnackBar(e.message.toString());
+      if (e.message != null) Utils.showSnackBar(e.message.toString(), Theme.of(context).colorScheme.error);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }

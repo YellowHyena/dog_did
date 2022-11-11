@@ -58,7 +58,7 @@ class _SignUpFormState extends State<SignUpForm> {
       if (kDebugMode) {
         print(e);
       }
-      if (e.message != null) Utils.showSnackBar(e.message.toString());
+      if (e.message != null) Utils.showSnackBar(e.message.toString(), Theme.of(context).colorScheme.error);
     }
 
     await createUserInDatabase(FirebaseAuth.instance.currentUser);

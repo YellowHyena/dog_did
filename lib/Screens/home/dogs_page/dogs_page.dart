@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
 import 'package:dog_did/screens/home/dogs_page/dog_tile.dart';
 import 'package:dog_did/user_data.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,10 @@ class _DogsPageState extends State<DogsPage> {
   @override
   Widget build(BuildContext context) {
     // final theme = Theme.of(context).colorScheme;
-    return Scaffold(
+    return DogDidScaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         title: const Text('Dogs'),
       ),
       body: StreamBuilder<List<DogData>>(

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class Utils {
   static final messengerKey = GlobalKey<ScaffoldMessengerState>();
-  static showSnackBar(String text) {
-    final snackBar = SnackBar(content: Text(text), backgroundColor: Colors.red);
+
+  static showSnackBar(String text, Color color) {
+    final snackBar = SnackBar(content: Text(text), backgroundColor: color);
     messengerKey.currentState!
       ..removeCurrentSnackBar()
       ..showSnackBar(snackBar);
@@ -14,9 +15,9 @@ class Utils {
   static loading(context) => showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (context) => const Center(
+        builder: (context) => Center(
           child: CircularProgressIndicator(
-            color: Color.fromARGB(255, 255, 111, 54),
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       );
