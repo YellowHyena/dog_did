@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/screens/auth/login/login_background.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 TextSpan(
                   recognizer: TapGestureRecognizer()..onTap = widget.onClickSignIn,
                   text: 'Sign in',
-                  style: TextStyle(decoration: TextDecoration.underline, color: Theme.of(context).colorScheme.primary),
+                  style: TextStyle(decoration: TextDecoration.underline, color: colorScheme.primary),
                 )
               ],
             ),

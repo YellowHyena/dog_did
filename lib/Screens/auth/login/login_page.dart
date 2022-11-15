@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/screens/auth/login/login_container_template.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextSpan(
                   recognizer: TapGestureRecognizer()..onTap = widget.onClickSignUp,
                   text: 'Sign up',
-                  style: TextStyle(decoration: TextDecoration.underline, color: Theme.of(context).colorScheme.primary),
+                  style: TextStyle(decoration: TextDecoration.underline, color: colorScheme.primary),
                 ),
               ],
             ),
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
           GestureDetector(
               child: Text(
                 'Forgot Password?',
-                style: TextStyle(decoration: TextDecoration.underline, color: Theme.of(context).colorScheme.primary),
+                style: TextStyle(decoration: TextDecoration.underline, color: colorScheme.primary),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ForgotPasswordPage())))
         ],

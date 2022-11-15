@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,7 +31,7 @@ class _DogProfileEntryState extends State<DogProfileEntry> {
       children: [
         Text(
           '${widget.text}: ',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.tertiary),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme.tertiary),
         ),
         SizedBox(
           width: 250,
@@ -42,7 +43,6 @@ class _DogProfileEntryState extends State<DogProfileEntry> {
                   border: InputBorder.none,
                   errorStyle: TextStyle(height: 0),
                 ),
-            // initialValue: widget.controller!.text,
             inputFormatters: widget.inputFormatters,
             keyboardType: widget.keyboardType,
             maxLength: widget.maxLength,

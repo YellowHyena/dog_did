@@ -2,6 +2,7 @@ class UserData {
   final String id;
   final String email;
   final String name;
+
   UserData({
     required this.id,
     required this.name,

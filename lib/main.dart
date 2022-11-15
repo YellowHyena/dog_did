@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
+
+  //Checks if user is logged in for debugging.
+  //TODO remove?
   FirebaseAuth.instance.userChanges().listen((User? user) {
     if (user == null) {
       if (kDebugMode) {
@@ -41,18 +45,12 @@ class MyApp extends StatelessWidget {
         title: 'Dog Did',
         theme: ThemeData(
             canvasColor: const Color.fromARGB(255, 51, 45, 43),
+            appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent, shadowColor: Colors.transparent),
             textTheme: Theme.of(context).textTheme.apply(
                   bodyColor: Colors.white,
                   displayColor: Colors.white,
                 ),
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 255, 111, 54),
-              primary: const Color.fromARGB(255, 255, 111, 54),
-              primaryContainer: const Color.fromARGB(255, 54, 54, 54),
-              inversePrimary: const Color.fromARGB(255, 129, 92, 78),
-              background: Colors.black,
-              tertiary: const Color.fromARGB(255, 141, 141, 141),
-            )),
+            colorScheme: colorScheme),
         home: FutureBuilder(
           future: _firebaseApp,
           builder: (context, snapshot) {

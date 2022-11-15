@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatefulWidget {
@@ -15,10 +16,8 @@ class LoginButton extends StatefulWidget {
 class _LoginButtonState extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-
     return ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50), backgroundColor: widget.enabled ? theme.primary : theme.inversePrimary, disabledBackgroundColor: theme.inversePrimary),
+      style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50), backgroundColor: widget.enabled ? colorScheme.primary : colorScheme.inversePrimary, disabledBackgroundColor: colorScheme.inversePrimary),
       icon: widget.enabled ? Icon(widget.enabledIcon, size: 32) : Icon(widget.disabledIcon, size: 32),
       label: Text(
         widget.text,

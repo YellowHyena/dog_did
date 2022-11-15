@@ -7,6 +7,7 @@ class DogData {
   final int age;
   final String imageURL;
   final String docPath;
+
   DogData({
     required this.id,
     required this.name,
@@ -26,6 +27,7 @@ class DogData {
         'description': description,
         'isFemale': isFemale,
         'docPath': docPath,
+        'imageURL': imageURL,
       };
   static DogData fromJson(Map<String, dynamic> json) => DogData(name: json['name'], age: json['age'], id: json['id'], breed: json['breed'], description: json['description'], isFemale: json['isFemale'], imageURL: json['imageURL'], docPath: json['docPath']);
 }

@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class LoginWidgetTextField extends StatefulWidget {
@@ -26,8 +27,6 @@ class _LoginWidgetTextFieldState extends State<LoginWidgetTextField> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).colorScheme;
-
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: widget.validator,
@@ -36,11 +35,11 @@ class _LoginWidgetTextFieldState extends State<LoginWidgetTextField> {
       cursorColor: Colors.white,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: theme.primary)),
+        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.primary)),
         labelText: widget.labelText,
-        labelStyle: TextStyle(color: theme.primary),
+        labelStyle: TextStyle(color: colorScheme.primary),
         filled: true,
-        fillColor: theme.primaryContainer,
+        fillColor: colorScheme.primaryContainer,
       ),
       onChanged: widget.onChanged,
       style: const TextStyle(color: Colors.white),

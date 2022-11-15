@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
@@ -38,9 +39,9 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     Utils.loading(context);
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
-      Utils.showSnackBar('An email with a reset link for your password has been sent', Theme.of(context).colorScheme.background);
+      Utils.showSnackBar('An email with a reset link for your password has been sent', colorScheme.background);
     } on FirebaseAuthException catch (e) {
-      if (e.message != null) Utils.showSnackBar(e.message.toString(), Theme.of(context).colorScheme.error);
+      if (e.message != null) Utils.showSnackBar(e.message.toString(), colorScheme.error);
     }
     Navigator.of(context).pop();
   }

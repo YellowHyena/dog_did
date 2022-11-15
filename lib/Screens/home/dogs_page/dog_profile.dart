@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dog_did/dog_data.dart';
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
 import 'package:dog_did/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,14 +77,11 @@ class _DogProfileState extends State<DogProfile> {
     ageController.text = ageController.text.isEmpty ? dog.age.toString() : ageController.text;
     descController.text = descController.text.isEmpty ? dog.description : descController.text;
     nameController.text = nameController.text.isEmpty ? dog.name : nameController.text;
-    final theme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: DogDidScaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-        ),
+        appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: ListView(
@@ -94,14 +92,18 @@ class _DogProfileState extends State<DogProfile> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(blurRadius: 50, color: theme.onBackground, spreadRadius: 1)],
+                        boxShadow: [BoxShadow(blurRadius: 50, color: colorScheme.onBackground, spreadRadius: 1)],
                       ),
                       child: GestureDetector(
                         onTap: chooseImage,
                         child: CircleAvatar(
                           radius: 100,
-                          backgroundColor: theme.primary,
+                          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
                           foregroundImage: NetworkImage(dog.imageURL),
+                          child: const Icon(
+                            Icons.pets_rounded,
+                            size: 120,
+                          ),
                         ),
                       )),
                   TextFormField(
@@ -137,7 +139,7 @@ class _DogProfileState extends State<DogProfile> {
                               style: const TextStyle(fontSize: 20),
                               icon: Icon(
                                 genderState ?? dog.isFemale ? Icons.female_rounded : Icons.male_rounded,
-                                color: theme.primary,
+                                color: colorScheme.primary,
                               ),
                               value: genderState ?? widget.dog.isFemale,
                               items: const [
@@ -159,14 +161,14 @@ class _DogProfileState extends State<DogProfile> {
                       ),
                       const SizedBox(height: 10),
                       Row(children: [
-                        Text('Description', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: theme.tertiary)),
+                        Text('Description', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme.tertiary)),
                       ]),
                       const SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
                               child: Container(
-                                  decoration: BoxDecoration(color: theme.onBackground, borderRadius: BorderRadius.circular(10)),
+                                  decoration: BoxDecoration(color: colorScheme.onBackground, borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                       padding: const EdgeInsets.only(left: 8, right: 8),
                                       child: SingleChildScrollView(
@@ -183,7 +185,7 @@ class _DogProfileState extends State<DogProfile> {
                         children: [
                           FloatingActionButton(
                             onPressed: save,
-                            backgroundColor: theme.primary,
+                            backgroundColor: colorScheme.primary,
                             child: const Text('Save'),
                           )
                         ],

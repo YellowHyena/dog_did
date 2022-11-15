@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../../dog_data.dart';
+import '../../../global_widgets/color_scheme.dart';
 import 'dog_profile.dart';
 
 class DogTile extends StatefulWidget {
@@ -14,13 +15,19 @@ class DogTile extends StatefulWidget {
 class _DogTileState extends State<DogTile> {
   @override
   Widget build(BuildContext context) {
-    inspect(widget.dog);
+    inspect(widget.dog.imageURL);
     return Column(
       children: [
         ListTile(
           leading: CircleAvatar(
             foregroundImage: NetworkImage(widget.dog.imageURL),
             radius: 30,
+            backgroundColor: colorScheme.inversePrimary,
+            child: Icon(
+              Icons.pets_rounded,
+              size: 40,
+              color: colorScheme.primary,
+            ),
           ),
           title: Text(
             widget.dog.name,
