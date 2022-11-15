@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DogDidScaffold extends StatelessWidget {
-  DogDidScaffold({super.key, required this.appBar, required this.body});
-  var body;
-  var appBar;
+  const DogDidScaffold({super.key, required this.appBar, required this.body});
+  final dynamic body;
+  final dynamic appBar;
 
   @override
   Widget build(BuildContext context) {

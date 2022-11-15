@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
 import 'package:dog_did/screens/home/dogs_page/dog_tile.dart';
 import 'package:dog_did/user_data.dart';
-import 'package:dog_did/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../dog_data.dart';
