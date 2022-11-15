@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextSpan(
                   recognizer: TapGestureRecognizer()..onTap = widget.onClickSignUp,
                   text: 'Sign up',
-                  style: TextStyle(decoration: TextDecoration.underline, color: colorScheme.primary),
+                  style: TextStyle(decoration: TextDecoration.underline, color: colorScheme().primary),
                 ),
               ],
             ),
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
           GestureDetector(
               child: Text(
                 'Forgot Password?',
-                style: TextStyle(decoration: TextDecoration.underline, color: colorScheme.primary),
+                style: TextStyle(decoration: TextDecoration.underline, color: colorScheme().primary),
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ForgotPasswordPage())))
         ],

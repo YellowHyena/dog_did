@@ -31,7 +31,7 @@ class _DogProfileEntryState extends State<DogProfileEntry> {
       children: [
         Text(
           '${widget.text}: ',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme.tertiary),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme().tertiary),
         ),
         SizedBox(
           width: 250,

@@ -1,3 +1,4 @@
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class DogDidScaffold extends StatelessWidget {
@@ -11,7 +12,7 @@ class DogDidScaffold extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).colorScheme.primaryContainer,
+              colorScheme().primaryContainer,
               Colors.black,
             ],
             begin: Alignment.topCenter,

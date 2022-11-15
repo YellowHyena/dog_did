@@ -48,7 +48,7 @@ class _DogProfileState extends State<DogProfile> {
     if (ageController.text != widget.dog.age.toString()) await dog.update({'age': int.parse(ageController.text)});
     if (descController.text != widget.dog.description) await dog.update({'description': descController.text});
     if (genderState != widget.dog.isFemale && genderState != null) await dog.update({'isFemale': genderState});
-    Utils.showSnackBar('Saved changes!', Theme.of(context).colorScheme.background);
+    Utils.showSnackBar('Saved changes!', colorScheme().background);
   }
 
   void chooseImage() async {
@@ -62,7 +62,7 @@ class _DogProfileState extends State<DogProfile> {
       final dogDoc = FirebaseFirestore.instance.doc(widget.dog.docPath);
       final url = await imgDir.getDownloadURL();
       dogDoc.update({'imageURL': url});
-      Utils.showSnackBar('Image saved!', Theme.of(context).colorScheme.background);
+      Utils.showSnackBar('Image saved!', colorScheme().background);
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -92,17 +92,18 @@ class _DogProfileState extends State<DogProfile> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(blurRadius: 50, color: colorScheme.onBackground, spreadRadius: 1)],
+                        boxShadow: [BoxShadow(blurRadius: 50, color: colorScheme().onBackground, spreadRadius: 1)],
                       ),
                       child: GestureDetector(
                         onTap: chooseImage,
                         child: CircleAvatar(
                           radius: 100,
-                          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                          foregroundImage: NetworkImage(dog.imageURL),
-                          child: const Icon(
+                          backgroundColor: colorScheme().inversePrimary,
+                          // foregroundImage: NetworkImage(dog.imageURL),
+                          child: Icon(
                             Icons.pets_rounded,
                             size: 120,
+                            color: colorScheme().primary,
                           ),
                         ),
                       )),
@@ -133,13 +134,13 @@ class _DogProfileState extends State<DogProfile> {
                       ),
                       Row(
                         children: [
-                          Text('Gender: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.tertiary)),
+                          Text('Gender: ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme().tertiary)),
                           DropdownButton(
                               underline: const SizedBox(),
                               style: const TextStyle(fontSize: 20),
                               icon: Icon(
                                 genderState ?? dog.isFemale ? Icons.female_rounded : Icons.male_rounded,
-                                color: colorScheme.primary,
+                                color: colorScheme().primary,
                               ),
                               value: genderState ?? widget.dog.isFemale,
                               items: const [
@@ -161,14 +162,14 @@ class _DogProfileState extends State<DogProfile> {
                       ),
                       const SizedBox(height: 10),
                       Row(children: [
-                        Text('Description', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme.tertiary)),
+                        Text('Description', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme().tertiary)),
                       ]),
                       const SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
                               child: Container(
-                                  decoration: BoxDecoration(color: colorScheme.onBackground, borderRadius: BorderRadius.circular(10)),
+                                  decoration: BoxDecoration(color: colorScheme().onBackground, borderRadius: BorderRadius.circular(10)),
                                   child: Padding(
                                       padding: const EdgeInsets.only(left: 8, right: 8),
                                       child: SingleChildScrollView(
@@ -185,7 +186,7 @@ class _DogProfileState extends State<DogProfile> {
                         children: [
                           FloatingActionButton(
                             onPressed: save,
-                            backgroundColor: colorScheme.primary,
+                            backgroundColor: colorScheme().primary,
                             child: const Text('Save'),
                           )
                         ],

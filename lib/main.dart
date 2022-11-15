@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
                   bodyColor: Colors.white,
                   displayColor: Colors.white,
                 ),
-            colorScheme: colorScheme),
+            colorScheme: colorScheme()),
         home: FutureBuilder(
           future: _firebaseApp,
           builder: (context, snapshot) {

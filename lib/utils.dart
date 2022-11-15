@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
@@ -17,7 +18,7 @@ class Utils {
         context: context,
         builder: (context) => Center(
           child: CircularProgressIndicator(
-            color: Theme.of(context).colorScheme.primary,
+            color: colorScheme().primary,
           ),
         ),
       );

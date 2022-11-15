@@ -15,18 +15,17 @@ class DogTile extends StatefulWidget {
 class _DogTileState extends State<DogTile> {
   @override
   Widget build(BuildContext context) {
-    inspect(widget.dog.imageURL);
     return Column(
       children: [
         ListTile(
           leading: CircleAvatar(
             foregroundImage: NetworkImage(widget.dog.imageURL),
             radius: 30,
-            backgroundColor: colorScheme.inversePrimary,
+            backgroundColor: colorScheme().inversePrimary,
             child: Icon(
               Icons.pets_rounded,
               size: 40,
-              color: colorScheme.primary,
+              color: colorScheme().primary,
             ),
           ),
           title: Text(
@@ -38,7 +37,7 @@ class _DogTileState extends State<DogTile> {
               Text(widget.dog.breed),
               Icon(
                 widget.dog.isFemale ? Icons.female_rounded : Icons.male_rounded,
-                color: Theme.of(context).colorScheme.primary,
+                color: colorScheme().primary,
               )
             ],
           ),
@@ -49,7 +48,7 @@ class _DogTileState extends State<DogTile> {
           thickness: 3,
           indent: 10,
           endIndent: 10,
-          color: Theme.of(context).colorScheme.primary,
+          color: colorScheme().primary,
         )
       ],
     );

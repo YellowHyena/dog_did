@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
@@ -58,7 +59,7 @@ class _SignUpFormState extends State<SignUpForm> {
       if (kDebugMode) {
         print(e);
       }
-      if (e.message != null) Utils.showSnackBar(e.message.toString(), Theme.of(context).colorScheme.error);
+      if (e.message != null) Utils.showSnackBar(e.message.toString(), colorScheme().error);
     }
 
     await createUserInDatabase(FirebaseAuth.instance.currentUser);

@@ -20,13 +20,6 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> {
   @override
   Widget build(BuildContext context) {
-    // getSortedList();
-    for (var dog in widget.dogList) {
-      for (var dogProfile in dog.where((e) => e.key == 'dog')) {
-        inspect(dogProfile.value);
-        // dogProfile
-      }
-    }
     return ListView(
       padding: const EdgeInsets.only(left: 50.0, top: 40.0),
       children: [

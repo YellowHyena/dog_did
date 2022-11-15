@@ -39,9 +39,9 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     Utils.loading(context);
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
-      Utils.showSnackBar('An email with a reset link for your password has been sent', colorScheme.background);
+      Utils.showSnackBar('An email with a reset link for your password has been sent', colorScheme().background);
     } on FirebaseAuthException catch (e) {
-      if (e.message != null) Utils.showSnackBar(e.message.toString(), colorScheme.error);
+      if (e.message != null) Utils.showSnackBar(e.message.toString(), colorScheme().error);
     }
     Navigator.of(context).pop();
   }

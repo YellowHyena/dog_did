@@ -31,15 +31,13 @@ class _DogsPageState extends State<DogsPage> {
               },
               icon: Icon(
                 Icons.add_rounded,
-                color: colorScheme.primary,
+                color: colorScheme().primary,
               ))
         ],
       ),
       body: StreamBuilder<List<DogData>>(
           stream: readDogs(widget.userData),
           builder: (context, snapshot) {
-            inspect(snapshot);
-            inspect(snapshot.error);
             if (snapshot.hasError) {
               return const Text('Something went wrong!');
             } else if (snapshot.hasData) {
