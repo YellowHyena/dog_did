@@ -22,6 +22,9 @@ class DogProfile extends StatefulWidget {
 }
 
 class _DogProfileState extends State<DogProfile> {
+  //TODO add ? icon for help?
+  //TODO fix gender resetting controllers
+  //TODO new dog image not loading first time?
   @override
   void dispose() {
     breedController.dispose();
@@ -51,9 +54,8 @@ class _DogProfileState extends State<DogProfile> {
   void chooseImage() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
-    final currentUser = FirebaseAuth.instance.currentUser?.uid;
-    // print(file?.path);
     if (file == null) return;
+    final currentUser = FirebaseAuth.instance.currentUser?.uid;
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirUsers = referenceRoot.child('user');
     Reference referenceDirUser = referenceDirUsers.child(currentUser!);

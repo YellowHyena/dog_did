@@ -42,6 +42,7 @@ class _DogProfileEntryState extends State<DogProfileEntry> {
                   border: InputBorder.none,
                   errorStyle: TextStyle(height: 0),
                 ),
+            // initialValue: widget.controller!.text,
             inputFormatters: widget.inputFormatters,
             keyboardType: widget.keyboardType,
             maxLength: widget.maxLength,
