@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,7 +22,6 @@ class DogProfile extends StatefulWidget {
 
 class _DogProfileState extends State<DogProfile> {
   //TODO add ? icon for help?
-  //TODO fix gender resetting controllers
   //TODO new dog image not loading first time?
   @override
   void dispose() {
@@ -39,15 +37,16 @@ class _DogProfileState extends State<DogProfile> {
   final descController = TextEditingController();
   final nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool? genderState;
 
-  void save() {
+  Future<void> save() async {
     final dog = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).collection('dogs').doc(widget.dog.id);
 
-    if (nameController.text != widget.dog.name) dog.update({'name': nameController.text});
-    if (breedController.text != widget.dog.breed) dog.update({'breed': breedController.text});
-    if (ageController.text != widget.dog.age.toString()) dog.update({'age': int.parse(ageController.text)});
-    if (descController.text != widget.dog.description) dog.update({'description': descController.text});
-    if (gender != widget.dog.isFemale) dog.update({'isFemale': gender});
+    if (nameController.text != widget.dog.name) await dog.update({'name': nameController.text});
+    if (breedController.text != widget.dog.breed) await dog.update({'breed': breedController.text});
+    if (ageController.text != widget.dog.age.toString()) await dog.update({'age': int.parse(ageController.text)});
+    if (descController.text != widget.dog.description) await dog.update({'description': descController.text});
+    if (genderState != widget.dog.isFemale && genderState != null) await dog.update({'isFemale': genderState});
     Utils.showSnackBar('Saved changes!', Theme.of(context).colorScheme.background);
   }
 
@@ -56,15 +55,11 @@ class _DogProfileState extends State<DogProfile> {
     XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
     if (file == null) return;
     final currentUser = FirebaseAuth.instance.currentUser?.uid;
-    Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirUsers = referenceRoot.child('user');
-    Reference referenceDirUser = referenceDirUsers.child(currentUser!);
-    Reference imgToUpload = referenceDirUser.child(widget.dog.id);
-    inspect(widget.dog.id);
+    Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!).child(widget.dog.id);
     try {
-      await imgToUpload.putFile(File(file.path));
+      await imgDir.putFile(File(file.path));
       final dogDoc = FirebaseFirestore.instance.doc(widget.dog.docPath);
-      final url = await imgToUpload.getDownloadURL();
+      final url = await imgDir.getDownloadURL();
       dogDoc.update({'imageURL': url});
       Utils.showSnackBar('Image saved!', Theme.of(context).colorScheme.background);
     } catch (error) {
@@ -74,14 +69,13 @@ class _DogProfileState extends State<DogProfile> {
     }
   }
 
-  bool? gender;
   @override
   Widget build(BuildContext context) {
     final dog = widget.dog;
-    breedController.text = dog.breed;
-    ageController.text = dog.age.toString();
-    descController.text = dog.description;
-    nameController.text = dog.name;
+    breedController.text = breedController.text.isEmpty ? dog.breed : breedController.text;
+    ageController.text = ageController.text.isEmpty ? dog.age.toString() : ageController.text;
+    descController.text = descController.text.isEmpty ? dog.description : descController.text;
+    nameController.text = nameController.text.isEmpty ? dog.name : nameController.text;
     final theme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -113,11 +107,7 @@ class _DogProfileState extends State<DogProfile> {
                   TextFormField(
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 40),
-                    decoration: const InputDecoration(
-                      counterText: '',
-                      border: InputBorder.none,
-                      errorStyle: TextStyle(height: 0),
-                    ),
+                    decoration: const InputDecoration(counterText: '', border: InputBorder.none, errorStyle: TextStyle(height: 0)),
                     controller: nameController,
                   ),
                 ],
@@ -146,10 +136,10 @@ class _DogProfileState extends State<DogProfile> {
                               underline: const SizedBox(),
                               style: const TextStyle(fontSize: 20),
                               icon: Icon(
-                                gender ?? dog.isFemale ? Icons.female_rounded : Icons.male_rounded,
+                                genderState ?? dog.isFemale ? Icons.female_rounded : Icons.male_rounded,
                                 color: theme.primary,
                               ),
-                              value: gender ?? widget.dog.isFemale,
+                              value: genderState ?? widget.dog.isFemale,
                               items: const [
                                 DropdownMenuItem<bool?>(
                                   value: true,
@@ -162,7 +152,7 @@ class _DogProfileState extends State<DogProfile> {
                               ],
                               onChanged: (value) {
                                 setState(() {
-                                  gender = value;
+                                  genderState = value;
                                 });
                               }),
                         ],
@@ -175,20 +165,16 @@ class _DogProfileState extends State<DogProfile> {
                       Row(
                         children: [
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(color: theme.onBackground, borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8, right: 8),
-                                child: SingleChildScrollView(
-                                  child: TextFormField(
-                                    controller: descController,
-                                    maxLines: 8,
-                                    decoration: const InputDecoration(border: InputBorder.none),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                              child: Container(
+                                  decoration: BoxDecoration(color: theme.onBackground, borderRadius: BorderRadius.circular(10)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(left: 8, right: 8),
+                                      child: SingleChildScrollView(
+                                          child: TextFormField(
+                                        controller: descController,
+                                        maxLines: 8,
+                                        decoration: const InputDecoration(border: InputBorder.none),
+                                      )))))
                         ],
                       ),
                       const SizedBox(height: 6),
@@ -199,7 +185,7 @@ class _DogProfileState extends State<DogProfile> {
                             onPressed: save,
                             backgroundColor: theme.primary,
                             child: const Text('Save'),
-                          ),
+                          )
                         ],
                       )
                     ],
@@ -213,5 +199,3 @@ class _DogProfileState extends State<DogProfile> {
     );
   }
 }
-
-//TODO add gender, edit name and picture
