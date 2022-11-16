@@ -1,5 +1,5 @@
 import 'package:dog_did/global_widgets/color_scheme.dart';
-// import 'package:dog_did/screens/home/dogs_page/dogs_page.dart';
+import 'package:dog_did/screens/dogs/dogs_page.dart';
 import 'package:dog_did/screens/home/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +8,9 @@ class DogDidScaffold extends StatelessWidget {
   final dynamic body;
   final dynamic appBar;
   final screens = [
-    const HomePage(title: 'Home page')
-    // DogsPage(userData: userData)
+    const HomePage(title: 'Home page'),
+    const DogsPage()
+    const
   ];
   @override
   Widget build(BuildContext context) {
