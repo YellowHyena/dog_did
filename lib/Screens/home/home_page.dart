@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../user_data.dart';
-import 'dogs_page/dogs_page.dart';
+import '../dogs/dogs_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});

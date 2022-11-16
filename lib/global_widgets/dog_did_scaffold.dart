@@ -7,11 +7,7 @@ class DogDidScaffold extends StatelessWidget {
   DogDidScaffold({super.key, required this.appBar, required this.body});
   final dynamic body;
   final dynamic appBar;
-  final screens = [
-    const HomePage(title: 'Home page'),
-    const DogsPage()
-    const
-  ];
+  final screens = [const HomePage(title: 'Home page'), const DogsPage()];
   @override
   Widget build(BuildContext context) {
     return Container(
