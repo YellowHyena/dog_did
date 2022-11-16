@@ -1,5 +1,7 @@
+import 'package:dog_did/global_widgets/current_user.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
+import 'package:dog_did/user_data.dart';
 import 'package:dog_did/utils.dart';
 import 'package:dog_did/main.dart';
 import 'package:email_validator/email_validator.dart';
@@ -40,6 +42,8 @@ class _LoginFormState extends State<LoginForm> {
     } on FirebaseAuthException catch (e) {
       if (e.message != null) Utils.showSnackBar(e.message.toString(), Theme.of(context).colorScheme.error);
     }
+    currentUser = FirebaseAuth.instance.currentUser;
+    currentUserData = await getCurrentUserData() as UserData?;
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 

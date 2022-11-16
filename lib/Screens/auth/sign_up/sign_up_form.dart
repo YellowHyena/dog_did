@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dog_did/global_widgets/color_scheme.dart';
+import 'package:dog_did/global_widgets/current_user.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/utils.dart';
@@ -61,8 +62,9 @@ class _SignUpFormState extends State<SignUpForm> {
       }
       if (e.message != null) Utils.showSnackBar(e.message.toString(), colorScheme().error);
     }
-
-    await createUserInDatabase(FirebaseAuth.instance.currentUser);
+    currentUser = FirebaseAuth.instance.currentUser;
+    await createUserInDatabase(currentUser);
+    currentUserData = await getCurrentUserData() as UserData?;
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 

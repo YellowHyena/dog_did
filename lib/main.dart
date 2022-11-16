@@ -1,4 +1,6 @@
 import 'package:dog_did/global_widgets/color_scheme.dart';
+import 'package:dog_did/global_widgets/current_user.dart';
+import 'package:dog_did/user_data.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +18,14 @@ Future<void> main() async {
 
   //Checks if user is logged in for debugging.
   //TODO remove?
-  FirebaseAuth.instance.userChanges().listen((User? user) {
+  FirebaseAuth.instance.userChanges().listen((User? user) async {
     if (user == null) {
       if (kDebugMode) {
         print('User is currently signed out!');
       }
     } else {
+      currentUser = user;
+      currentUserData = await getCurrentUserData() as UserData?;
       if (kDebugMode) {
         print('User is signed in!');
       }
@@ -63,7 +67,7 @@ class MyApp extends StatelessWidget {
               return Scaffold(
                 body: StreamBuilder<User?>(
                   stream: FirebaseAuth.instance.authStateChanges(),
-                  builder: (context, snapshot) => snapshot.hasData ? HomePage(title: 'home page') : const AuthPage(),
+                  builder: (context, snapshot) => snapshot.hasData ? const HomePage(title: 'home page') : const AuthPage(),
                 ),
               );
             } else {

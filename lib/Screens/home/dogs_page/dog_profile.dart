@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dog_did/dog_data.dart';
 import 'package:dog_did/global_widgets/color_scheme.dart';
+import 'package:dog_did/global_widgets/current_user.dart';
 import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
 import 'package:dog_did/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,7 +42,7 @@ class _DogProfileState extends State<DogProfile> {
   bool? genderState;
 
   Future<void> save() async {
-    final dog = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).collection('dogs').doc(widget.dog.id);
+    final dog = FirebaseFirestore.instance.collection('users').doc(currentUser?.uid).collection('dogs').doc(widget.dog.id);
 
     if (nameController.text != widget.dog.name) await dog.update({'name': nameController.text});
     if (breedController.text != widget.dog.breed) await dog.update({'breed': breedController.text});
@@ -55,8 +56,8 @@ class _DogProfileState extends State<DogProfile> {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
     if (file == null) return;
-    final currentUser = FirebaseAuth.instance.currentUser?.uid;
-    Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!).child(widget.dog.id);
+
+    Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!.uid).child(widget.dog.id);
     try {
       await imgDir.putFile(File(file.path));
       final dogDoc = FirebaseFirestore.instance.doc(widget.dog.docPath);
@@ -99,7 +100,7 @@ class _DogProfileState extends State<DogProfile> {
                         child: CircleAvatar(
                           radius: 100,
                           backgroundColor: colorScheme().inversePrimary,
-                          // foregroundImage: NetworkImage(dog.imageURL),
+                          foregroundImage: NetworkImage(dog.imageURL),
                           child: Icon(
                             Icons.pets_rounded,
                             size: 120,

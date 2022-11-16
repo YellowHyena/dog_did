@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dog_did/global_widgets/current_user.dart';
+import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -6,64 +8,47 @@ import '../../user_data.dart';
 import 'dogs_page/dogs_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key, required this.title});
+  const HomePage({super.key, required this.title});
   final String title;
-  final user = FirebaseAuth.instance.currentUser!;
+  // final user = FirebaseAuth.instance.currentUser!;
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  UserData? userData;
-  // List<Map<String, dynamic>> _sheduleList = [];
-  // List _sheduleList = [];
-  final currentUser = FirebaseAuth.instance.currentUser;
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   // if (_sheduleList.isEmpty) getSheduleList();
-  //   // getSingleDogList();
-  // }
+  // UserData? userData;
+  // final currentUser = FirebaseAuth.instance.currentUser;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => DogDidScaffold(
         appBar: AppBar(title: const Text('Home page'), actions: [IconButton(icon: const Icon(Icons.logout_outlined), onPressed: () => FirebaseAuth.instance.signOut())]),
         body: Column(
           children: [
-            FutureBuilder<UserData?>(
-                future: readUser(),
-                builder: (context, snapshot) {
-                  // inspect(snapshot.data);
-                  if (snapshot.hasData) return buildUser(snapshot.data);
-                  return const Text('Something went wrong!');
-                }),
-            FloatingActionButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DogsPage(userData: userData)))),
+            // FutureBuilder<UserData?>(
+            //     future: readUser(),
+            //     builder: (context, snapshot) {
+            //       if (snapshot.hasData) return buildUser(snapshot.data);
+            //       return const Text('Something went wrong!');
+            //     }),
+            // TextButton(
+            //   onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DogsPage(userData: userData))),
+            //   child: Row(children: [
+            //     Text(
+            //       'Dog page',
+            //       style: TextStyle(fontSize: 20),
+            //     ),
+            //     Icon(Icons.arrow_forward_rounded)
+            //   ]),
+            // ),
           ],
         ),
       );
 
-  Future<UserData?> readUser() async {
-    if (userData != null) return userData;
-
-    final docUser = FirebaseFirestore.instance.collection('users').doc(currentUser?.uid);
-    final snapshot = await docUser.get();
-    // inspect(snapshot.data());
-    if (snapshot.exists) {
-      setState(() {
-        userData = UserData.fromJson(snapshot.data()!);
-      });
-      // inspect(userData);
-
-      return UserData.fromJson(snapshot.data()!);
-    }
-    return null;
-  }
-
-  Widget buildUser(UserData? user) => ListTile(
-        leading: Text(user!.email),
-        title: Text(user.id),
-        subtitle: Text(user.name),
-      );
+  // Widget buildUser(UserData? user) => ListTile(
+  //       leading: Text(user!.email),
+  //       title: Text(user.id),
+  //       subtitle: Text(user.name),
+  //     );
 
   // Future getSheduleList() async {
   //   // if (kDebugMode) {
