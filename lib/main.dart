@@ -1,20 +1,18 @@
 import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/global_widgets/current_user.dart';
-import 'package:dog_did/user_data.dart';
+import 'package:dog_did/screens/home/main_scaffold.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'screens/auth/auth_page.dart';
-import 'screens/home/home_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'utils.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 
   //Checks if user is logged in for debugging.
   //TODO remove?
@@ -25,7 +23,7 @@ Future<void> main() async {
       }
     } else {
       currentUser = user;
-      currentUserData = await getCurrentUserData() as UserData?;
+      currentUserData = await getCurrentUserData();
       if (kDebugMode) {
         print('User is signed in!');
       }
@@ -38,10 +36,15 @@ Future<void> main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
-  MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) => MaterialApp(
         scaffoldMessengerKey: Utils.messengerKey,
@@ -64,11 +67,9 @@ class MyApp extends StatelessWidget {
               }
               return const Text("Someone let the dogs out and something went wrong!");
             } else if (snapshot.hasData) {
-              return Scaffold(
-                body: StreamBuilder<User?>(
-                  stream: FirebaseAuth.instance.authStateChanges(),
-                  builder: (context, snapshot) => snapshot.hasData ? const HomePage(title: 'home page') : const AuthPage(),
-                ),
+              return StreamBuilder<User?>(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) => snapshot.hasData ? const MainScaffold() : const AuthPage(),
               );
             } else {
               return const Center(child: CircularProgressIndicator());

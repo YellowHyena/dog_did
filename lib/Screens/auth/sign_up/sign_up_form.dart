@@ -64,7 +64,7 @@ class _SignUpFormState extends State<SignUpForm> {
     }
     currentUser = FirebaseAuth.instance.currentUser;
     await createUserInDatabase(currentUser);
-    currentUserData = await getCurrentUserData() as UserData?;
+    currentUserData = await getCurrentUserData();
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 

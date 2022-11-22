@@ -5,8 +5,8 @@ import 'package:dog_did/dog_data.dart';
 import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/global_widgets/current_user.dart';
 import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
+import 'package:dog_did/screens/dogs/dogs_page.dart';
 import 'package:dog_did/utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +71,17 @@ class _DogProfileState extends State<DogProfile> {
     }
   }
 
+  void deleteDog() async {
+    try {
+      await DogData.delete(widget.dog.docPath);
+    } catch (e) {
+      Utils.showSnackBar('Removing dog failed.', colorScheme().error);
+      return;
+    }
+    Navigator.of(context).pop();
+    Utils.showSnackBar('Dog was successfully removed.', colorScheme().background);
+  }
+
   @override
   Widget build(BuildContext context) {
     final dog = widget.dog;
@@ -82,7 +93,8 @@ class _DogProfileState extends State<DogProfile> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: DogDidScaffold(
-        appBar: AppBar(),
+        //TODO pop up to make sure you want to delete dog.
+        appBar: AppBar(actions: [IconButton(icon: const Icon(Icons.delete_forever_rounded), onPressed: () => deleteDog())]),
         body: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: ListView(

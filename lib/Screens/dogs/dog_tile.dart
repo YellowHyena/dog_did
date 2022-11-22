@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../dog_data.dart';
 import '../../global_widgets/color_scheme.dart';
