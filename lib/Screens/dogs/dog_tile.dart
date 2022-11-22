@@ -44,7 +44,7 @@ class _DogTileState extends State<DogTile> {
         ),
         Divider(
           height: 10,
-          thickness: 3,
+          thickness: 1,
           indent: 10,
           endIndent: 10,
           color: colorScheme().primary,

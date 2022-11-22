@@ -24,6 +24,7 @@ Future<void> main() async {
     } else {
       currentUser = user;
       currentUserData = await getCurrentUserData();
+
       if (kDebugMode) {
         print('User is signed in!');
       }
