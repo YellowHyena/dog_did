@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'global_widgets/current_user.dart';
+import 'current_user.dart';
 
 class DogData {
   final String id;

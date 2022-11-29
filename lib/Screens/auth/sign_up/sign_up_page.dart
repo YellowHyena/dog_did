@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../login/login_container_template.dart';
 import 'sign_up_form.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends StatelessWidget {
   final VoidCallback onClickSignIn;
 
   const SignUpPage({
@@ -13,11 +13,6 @@ class SignUpPage extends StatefulWidget {
     required this.onClickSignIn,
   }) : super(key: key);
 
-  @override
-  State<SignUpPage> createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) => LoginContainerTemplate(
         children: [
@@ -29,7 +24,7 @@ class _SignUpPageState extends State<SignUpPage> {
               text: 'Already have an account? ',
               children: [
                 TextSpan(
-                  recognizer: TapGestureRecognizer()..onTap = widget.onClickSignIn,
+                  recognizer: TapGestureRecognizer()..onTap = onClickSignIn,
                   text: 'Sign in',
                   style: TextStyle(decoration: TextDecoration.underline, color: colorScheme().primary),
                 )

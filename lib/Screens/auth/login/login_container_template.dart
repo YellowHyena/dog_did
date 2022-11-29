@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 class LoginContainerTemplate extends StatelessWidget {
   final dynamic children;
 
-  LoginContainerTemplate({
+  const LoginContainerTemplate({
     Key? key,
     this.children,
   }) : super(key: key);
 
-  final appBar = AppBar(title: const Text("data"));
   @override
   Widget build(BuildContext context) {
     return Scaffold(

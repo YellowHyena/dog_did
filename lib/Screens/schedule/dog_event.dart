@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class Meeting {
-  Meeting({
+class DogEvent {
+  DogEvent({
     required this.from,
     required this.to,
     this.background = Colors.green,
@@ -24,7 +24,7 @@ class Meeting {
 }
 
 class DataSource extends CalendarDataSource {
-  DataSource(List<Meeting> source) {
+  DataSource(List<DogEvent> source) {
     appointments = source;
   }
 

@@ -3,13 +3,13 @@ import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/global_widgets/current_user.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
-import 'package:dog_did/utils.dart';
+import 'package:dog_did/global_widgets/utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../main.dart';
-import '../../../user_data.dart';
+import '../../../global_widgets/user_data.dart';
 import '../login/login_textfield.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -64,7 +64,7 @@ class _SignUpFormState extends State<SignUpForm> {
     }
     currentUser = FirebaseAuth.instance.currentUser;
     await createUserInDatabase(currentUser);
-    currentUserData = await getCurrentUserData();
+    await getCurrentUserData();
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 

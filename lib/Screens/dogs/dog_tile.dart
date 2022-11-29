@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-import '../../dog_data.dart';
+import '../../global_widgets/dog_data.dart';
 import '../../global_widgets/color_scheme.dart';
 import 'dog_profile.dart';
 
-class DogTile extends StatefulWidget {
+class DogTile extends StatelessWidget {
   final DogData dog;
 
   const DogTile({super.key, required this.dog});
-  @override
-  State<DogTile> createState() => _DogTileState();
-}
-
-class _DogTileState extends State<DogTile> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
           leading: CircleAvatar(
-            foregroundImage: NetworkImage(widget.dog.imageURL),
+            foregroundImage: NetworkImage(dog.imageURL),
             radius: 30,
             backgroundColor: colorScheme().inversePrimary,
             child: Icon(
@@ -28,19 +23,19 @@ class _DogTileState extends State<DogTile> {
             ),
           ),
           title: Text(
-            widget.dog.name,
+            dog.name,
             style: const TextStyle(fontSize: 25),
           ),
           subtitle: Row(
             children: [
-              Text(widget.dog.breed),
+              Text(dog.breed),
               Icon(
-                widget.dog.isFemale ? Icons.female_rounded : Icons.male_rounded,
+                dog.isFemale ? Icons.female_rounded : Icons.male_rounded,
                 color: colorScheme().primary,
               )
             ],
           ),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DogProfile(dog: widget.dog))),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => DogProfile(dog: dog))),
         ),
         Divider(
           height: 10,

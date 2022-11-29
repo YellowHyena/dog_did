@@ -2,17 +2,12 @@ import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
 import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/screens/dogs/dog_tile.dart';
 import 'package:flutter/material.dart';
-import '../../dog_data.dart';
+import '../../global_widgets/dog_data.dart';
 import 'dog_profile.dart';
 
-class DogsPage extends StatefulWidget {
+class DogsPage extends StatelessWidget {
   const DogsPage({super.key});
 
-  @override
-  State<DogsPage> createState() => _DogsPageState();
-}
-
-class _DogsPageState extends State<DogsPage> {
   @override
   Widget build(BuildContext context) {
     return DogDidScaffold(

@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dog_did/dog_data.dart';
+import 'package:dog_did/global_widgets/dog_data.dart';
 import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/global_widgets/current_user.dart';
 import 'package:dog_did/global_widgets/dog_did_scaffold.dart';
-import 'package:dog_did/screens/dogs/dogs_page.dart';
-import 'package:dog_did/utils.dart';
+import 'package:dog_did/global_widgets/utils.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +52,7 @@ class _DogProfileState extends State<DogProfile> {
 
   void chooseImage() async {
     ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+    XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
     if (file == null) return;
 
     Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!.uid).child(widget.dog.id);
@@ -93,7 +91,7 @@ class _DogProfileState extends State<DogProfile> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: DogDidScaffold(
-        //TODO pop up to make sure you want to delete dog.
+        //TODO pop up to make sure you want to delete dog. plus delete image in storage
         appBar: AppBar(actions: [IconButton(icon: const Icon(Icons.delete_forever_rounded), onPressed: () => deleteDog())]),
         body: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),

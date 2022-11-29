@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'screens/auth/auth_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'utils.dart';
+import 'global_widgets/utils.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

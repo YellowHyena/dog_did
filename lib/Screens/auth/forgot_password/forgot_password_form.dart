@@ -1,7 +1,7 @@
 import 'package:dog_did/global_widgets/color_scheme.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
-import 'package:dog_did/utils.dart';
+import 'package:dog_did/global_widgets/utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +62,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           disabledIcon: Icons.mail,
           enabledIcon: Icons.outbond_rounded,
         ),
+        //TODO move this
         Positioned(
           top: 0.0,
           left: 0.0,
