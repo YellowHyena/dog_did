@@ -38,6 +38,7 @@ class _DogProfileState extends State<DogProfile> {
   final nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool? genderState;
+  String? newProfileImage;
 
   Future<void> save() async {
     final dog = FirebaseFirestore.instance.collection('users').doc(currentUser?.uid).collection('dogs').doc(widget.dog.id);
@@ -47,21 +48,23 @@ class _DogProfileState extends State<DogProfile> {
     if (ageController.text != widget.dog.age.toString()) await dog.update({'age': int.parse(ageController.text)});
     if (descController.text != widget.dog.description) await dog.update({'description': descController.text});
     if (genderState != widget.dog.isFemale && genderState != null) await dog.update({'isFemale': genderState});
+    if (newProfileImage != widget.dog.imageURL && newProfileImage != null) await dog.update({'imageURL': newProfileImage});
     Utils.showSnackBar('Saved changes!', colorScheme().background);
   }
 
   void chooseImage() async {
     ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+    XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
     if (file == null) return;
 
     Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!.uid).child(widget.dog.id);
     try {
       await imgDir.putFile(File(file.path));
-      final dogDoc = FirebaseFirestore.instance.doc(widget.dog.docPath);
       final url = await imgDir.getDownloadURL();
-      dogDoc.update({'imageURL': url});
-      Utils.showSnackBar('Image saved!', colorScheme().background);
+      setState(() {
+        newProfileImage = url;
+      });
+      // Utils.showSnackBar('Image saved!', colorScheme().background);
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -69,9 +72,9 @@ class _DogProfileState extends State<DogProfile> {
     }
   }
 
-  void deleteDog() async {
+  deleteDog() async {
     try {
-      await DogData.delete(widget.dog.docPath);
+      await DogData.delete(widget.dog);
     } catch (e) {
       Utils.showSnackBar('Removing dog failed.', colorScheme().error);
       return;
@@ -92,7 +95,7 @@ class _DogProfileState extends State<DogProfile> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: DogDidScaffold(
         //TODO pop up to make sure you want to delete dog. plus delete image in storage
-        appBar: AppBar(actions: [IconButton(icon: const Icon(Icons.delete_forever_rounded), onPressed: () => deleteDog())]),
+        appBar: AppBar(actions: [IconButton(icon: const Icon(Icons.delete_forever_rounded), onPressed: () => Utils.confirmAction('delete this dog profile? This action is ireversible.', deleteDog, context))]),
         body: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: ListView(
@@ -110,7 +113,7 @@ class _DogProfileState extends State<DogProfile> {
                         child: CircleAvatar(
                           radius: 100,
                           backgroundColor: colorScheme().inversePrimary,
-                          foregroundImage: NetworkImage(dog.imageURL),
+                          foregroundImage: NetworkImage(newProfileImage ?? widget.dog.imageURL),
                           child: Icon(
                             Icons.pets_rounded,
                             size: 120,

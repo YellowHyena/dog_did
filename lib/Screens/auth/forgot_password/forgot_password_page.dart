@@ -7,8 +7,8 @@ class ForgotPasswordPage extends StatelessWidget {
   const ForgotPasswordPage({super.key});
 
   @override
-  Widget build(BuildContext context) => LoginContainerTemplate(
-        children: const [
+  Widget build(BuildContext context) => const LoginContainerTemplate(
+        children: [
           LoginBackground(),
           ForgotPasswordForm(),
         ],

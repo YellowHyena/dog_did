@@ -22,4 +22,25 @@ class Utils {
           ),
         ),
       );
+
+  static confirmAction(String actionText, Function action, context) => showDialog(
+        context: context,
+        builder: (context) => (AlertDialog(
+          backgroundColor: colorScheme().background,
+          title: const Text('Confirm action'),
+          content: Text('Are you sure you want to $actionText'),
+          actions: [
+            TextButton(
+              child: const Text('CANCEL'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+                onPressed: () {
+                  action();
+                  Navigator.pop(context);
+                },
+                child: const Text('YES'))
+          ],
+        )),
+      );
 }

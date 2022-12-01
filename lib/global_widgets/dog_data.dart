@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'current_user.dart';
 
 class DogData {
@@ -35,7 +36,7 @@ class DogData {
   static DogData fromJson(Map<String, dynamic> json) => DogData(name: json['name'], age: json['age'], id: json['id'], breed: json['breed'], description: json['description'], isFemale: json['isFemale'], imageURL: json['imageURL'], docPath: json['docPath']);
 
   static Future<DogData> createDogInDatabase() async {
-    final docDog = FirebaseFirestore.instance.collection('users').doc(currentUserData?.id).collection('dogs').doc();
+    final docDog = FirebaseFirestore.instance.collection('users').doc(currentUser?.uid).collection('dogs').doc();
 
     final dogToCreate = DogData(id: docDog.id, name: 'New Dog', age: 0, breed: '', description: '', isFemale: true, imageURL: '', docPath: docDog.path);
     final json = dogToCreate.toJson();
@@ -43,7 +44,10 @@ class DogData {
     return dogToCreate;
   }
 
-  static Stream<List<DogData>> readDogs() => FirebaseFirestore.instance.collection('users').doc(currentUserData?.id).collection('dogs').snapshots().map((snapshot) => snapshot.docs.map((doc) => DogData.fromJson(doc.data())).toList());
+  static Stream<List<DogData>> readDogs() => FirebaseFirestore.instance.collection('users').doc(currentUser?.uid).collection('dogs').snapshots().map((snapshot) => snapshot.docs.map((doc) => DogData.fromJson(doc.data())).toList());
 
-  static delete(dogPath) => FirebaseFirestore.instance.doc(dogPath).delete();
+  static delete(DogData dog) {
+    FirebaseFirestore.instance.doc(dog.docPath).delete();
+    FirebaseStorage.instance.ref(dog.imageURL);
+  }
 }
