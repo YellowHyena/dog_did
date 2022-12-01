@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'current_user.dart';
@@ -46,8 +48,10 @@ class DogData {
 
   static Stream<List<DogData>> readDogs() => FirebaseFirestore.instance.collection('users').doc(currentUser?.uid).collection('dogs').snapshots().map((snapshot) => snapshot.docs.map((doc) => DogData.fromJson(doc.data())).toList());
 
-  static delete(DogData dog) {
-    FirebaseFirestore.instance.doc(dog.docPath).delete();
-    FirebaseStorage.instance.ref(dog.imageURL);
+  static delete(DogData dog) async {
+    await FirebaseFirestore.instance.doc(dog.docPath).delete();
+    inspect(dog.imageURL);
+    Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!.uid).child(dog.id);
+    await imgDir.delete();
   }
 }

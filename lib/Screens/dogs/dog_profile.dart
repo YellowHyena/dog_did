@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dog_did/global_widgets/dog_data.dart';
@@ -22,7 +23,6 @@ class DogProfile extends StatefulWidget {
 
 class _DogProfileState extends State<DogProfile> {
   //TODO add ? icon for help?
-  //TODO new dog image not loading first time?
   @override
   void dispose() {
     breedController.dispose();
@@ -48,7 +48,6 @@ class _DogProfileState extends State<DogProfile> {
     if (ageController.text != widget.dog.age.toString()) await dog.update({'age': int.parse(ageController.text)});
     if (descController.text != widget.dog.description) await dog.update({'description': descController.text});
     if (genderState != widget.dog.isFemale && genderState != null) await dog.update({'isFemale': genderState});
-    if (newProfileImage != widget.dog.imageURL && newProfileImage != null) await dog.update({'imageURL': newProfileImage});
     Utils.showSnackBar('Saved changes!', colorScheme().background);
   }
 
@@ -56,18 +55,19 @@ class _DogProfileState extends State<DogProfile> {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
     if (file == null) return;
-
+    final dog = FirebaseFirestore.instance.collection('users').doc(currentUser?.uid).collection('dogs').doc(widget.dog.id);
     Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!.uid).child(widget.dog.id);
     try {
       await imgDir.putFile(File(file.path));
       final url = await imgDir.getDownloadURL();
       setState(() {
+        dog.update({'imageURL': url});
         newProfileImage = url;
       });
-      // Utils.showSnackBar('Image saved!', colorScheme().background);
+      Utils.showSnackBar('Image is saved.', colorScheme().background);
     } catch (error) {
       if (kDebugMode) {
-        print(error);
+        Utils.showSnackBar('Adding image failed.', colorScheme().error);
       }
     }
   }
@@ -90,11 +90,11 @@ class _DogProfileState extends State<DogProfile> {
     ageController.text = ageController.text.isEmpty ? dog.age.toString() : ageController.text;
     descController.text = descController.text.isEmpty ? dog.description : descController.text;
     nameController.text = nameController.text.isEmpty ? dog.name : nameController.text;
+    inspect(dog.imageURL);
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: DogDidScaffold(
-        //TODO pop up to make sure you want to delete dog. plus delete image in storage
         appBar: AppBar(actions: [IconButton(icon: const Icon(Icons.delete_forever_rounded), onPressed: () => Utils.confirmAction('delete this dog profile? This action is ireversible.', deleteDog, context))]),
         body: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),

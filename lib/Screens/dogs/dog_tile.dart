@@ -4,9 +4,9 @@ import '../../global_widgets/color_scheme.dart';
 import 'dog_profile.dart';
 
 class DogTile extends StatelessWidget {
+  const DogTile({super.key, required this.dog});
   final DogData dog;
 
-  const DogTile({super.key, required this.dog});
   @override
   Widget build(BuildContext context) {
     return Column(
