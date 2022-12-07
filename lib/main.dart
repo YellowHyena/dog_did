@@ -4,18 +4,18 @@ import 'package:dog_did/screens/home/main_scaffold.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'screens/auth/auth_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'global_widgets/utils.dart';
 
 Future<void> main() async {
+  GoogleFonts.config.allowRuntimeFetching = false;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 
-  //Checks if user is logged in for debugging.
-  //TODO remove?
   FirebaseAuth.instance.userChanges().listen((User? user) async {
     if (user == null) {
       if (kDebugMode) {
