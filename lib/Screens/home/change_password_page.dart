@@ -29,9 +29,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final confirmNewController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  String? getCurrentPassword(String? sdf) {
-    return 'balls';
-  }
+  // String? getCurrentPassword(String? sdf) {
+  //   return 'balls';
+  // }
 
   // @override
   // void initState() {
@@ -48,7 +48,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         children: [
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (current) => current!.length < 6 ? 'passwred most be låpnger!' : null,
+            validator: (current) => current!.length < 6 ? 'Password must be more than 6 symbols!' : null,
             onSaved: (newValue) => _input = newValue,
             controller: currentController,
             cursorColor: Colors.white,

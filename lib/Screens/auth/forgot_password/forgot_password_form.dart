@@ -1,4 +1,5 @@
 import 'package:dog_did/global_widgets/color_scheme.dart';
+import 'package:dog_did/main.dart';
 import 'package:dog_did/screens/auth/login/login_button.dart';
 import 'package:dog_did/screens/auth/login/login_form_container.dart';
 import 'package:dog_did/global_widgets/utils.dart';
@@ -43,7 +44,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     } on FirebaseAuthException catch (e) {
       if (e.message != null) Utils.showSnackBar(e.message.toString(), colorScheme().error);
     }
-    Navigator.of(context).pop();
+    navigatorKey.currentState!.pop();
   }
 
   @override
@@ -60,7 +61,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           text: 'Reset Password',
           enabled: _btnIsEnabled,
           disabledIcon: Icons.mail,
-          enabledIcon: Icons.outbond_rounded,
+          enabledIcon: Icons.mail,
         ),
         //TODO move this
         Positioned(

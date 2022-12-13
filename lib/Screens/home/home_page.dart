@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) => DogDidScaffold(
-        appBar: AppBar(title: const Text('Home page'), actions: [IconButton(icon: const Icon(Icons.logout_outlined), onPressed: () => FirebaseAuth.instance.signOut())]),
+        appBar: AppBar(title: const Text('Home page')),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

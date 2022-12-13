@@ -40,6 +40,7 @@ class _LoginFormState extends State<LoginForm> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       if (e.message != null) Utils.showSnackBar(e.message.toString(), Theme.of(context).colorScheme.error);
+      navigatorKey.currentState!.pop();
     }
     currentUser = FirebaseAuth.instance.currentUser;
     await getCurrentUserData();

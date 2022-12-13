@@ -61,6 +61,7 @@ class _SignUpFormState extends State<SignUpForm> {
         print(e);
       }
       if (e.message != null) Utils.showSnackBar(e.message.toString(), colorScheme().error);
+      navigatorKey.currentState!.pop();
     }
     currentUser = FirebaseAuth.instance.currentUser;
     await createUserInDatabase(currentUser);
