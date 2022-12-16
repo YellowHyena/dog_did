@@ -53,7 +53,7 @@ class _DogProfileState extends State<DogProfile> {
 
   void chooseImage() async {
     ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+    XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
     if (file == null) return;
     final dog = FirebaseFirestore.instance.collection('users').doc(currentUser?.uid).collection('dogs').doc(widget.dog.id);
     Reference imgDir = FirebaseStorage.instance.ref().child('user').child(currentUser!.uid).child(widget.dog.id);
